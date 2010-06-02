@@ -1,4 +1,7 @@
-require "mg"
+require 'rake'
+require 'bundler'
+
+require 'mg'
 require 'active_support/inflector'
 require 'shoulda/tasks'
 

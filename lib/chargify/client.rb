@@ -1,17 +1,5 @@
 module Chargify
-  class UnexpectedResponseError < RuntimeError
-  end
-  
-  class Parser < HTTParty::Parser
-    def parse
-      begin
-        Crack::JSON.parse(body)
-      rescue => e
-        raise UnexpectedResponseError, "Crack could not parse JSON. It said: #{e.message}. Chargify's raw response: #{body}"
-      end
-    end
-  end
-  
+
   class Client
     include HTTParty
     
@@ -27,64 +15,9 @@ module Chargify
       
       self.class.base_uri "https://#{@subdomain}.chargify.com"
       self.class.basic_auth @api_key, 'x'
-      
     end
     
-    # options: page
-    def list_customers(options={})
-      customers = get("/customers.json", :query => options)
-      customers.map{|c| Hashie::Mash.new c['customer']}
-    end
-    
-    def customer_by_id(chargify_id)
-      request = get("/customers/#{chargify_id}.json")
-      success = request.code == 200
-      response = Hashie::Mash.new(request).customer if success
-      Hashie::Mash.new(response || {}).update(:success? => success)
-    end
-    
-    def customer_by_reference(reference_id)
-      request = get("/customers/lookup.json?reference=#{reference_id}")
-      success = request.code == 200
-      response = Hashie::Mash.new(request).customer if success
-      Hashie::Mash.new(response || {}).update(:success? => success)
-    end
-    
-    alias customer customer_by_reference
-    
-    
-    #
-    # * first_name (Required)
-    # * last_name (Required)
-    # * email (Required)
-    # * organization (Optional) Company/Organization name
-    # * reference (Optional, but encouraged) The unique identifier used within your own application for this customer
-    # 
-    def create_customer(info={})
-      response = Hashie::Mash.new(post("/customers.json", :body => {:customer => info}))
-      return response.customer if response.customer
-      response
-    end
-    
-    #
-    # * first_name (Required)
-    # * last_name (Required)
-    # * email (Required)
-    # * organization (Optional) Company/Organization name
-    # * reference (Optional, but encouraged) The unique identifier used within your own application for this customer
-    # 
-    def update_customer(info={})
-      info.stringify_keys!
-      chargify_id = info.delete('id')
-      response = Hashie::Mash.new(put("/customers/#{chargify_id}.json", :body => {:customer => info}))
-      return response.customer unless response.customer.to_a.empty?
-      response
-    end
-    
-    def customer_subscriptions(chargify_id)
-      subscriptions = get("/customers/#{chargify_id}/subscriptions.json")
-      subscriptions.map{|s| Hashie::Mash.new s['subscription']}
-    end
+
     
     def subscription(subscription_id)
       raw_response = get("/subscriptions/#{subscription_id}.json")
