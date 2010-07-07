@@ -1,29 +1,22 @@
 module Chargify
-  
-  class Product < Hashie::Dash
-    property :id
-    
-    property :first_name
-    property :last_name
-    
-    property :email
-    property :phone
-    property :organization
-  
-    property :address
-    property :address_2
-    property :city
-    property :state
-    property :zip
-    property :country
+  class Product
+    include HappyMapper
 
-    property :created_at
-    property :updated_at
-    
-    property :reference
-    
+    element :name, String
+    element :handle, String
+
+    element :accounting_code, String
+    element :description, String
+
+    element :interval_type, Integer
+    element :interval_unit, String
+
+    element :price_in_cents, Integer
+
+    has_one :product_family, ProductFamily
+
     class << self
-      
+
     end
   end
 end

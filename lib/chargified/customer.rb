@@ -1,27 +1,29 @@
 module Chargify
-  
-  class Customer < Hashie::Dash
-    property :id
-    
-    property :first_name
-    property :last_name
-    
-    property :email
-    property :phone
-    property :organization
-  
-    property :address
-    property :address_2
-    property :city
-    property :state
-    property :zip
-    property :country
+  class Customer
+    include HappyMapper
 
-    property :created_at
-    property :updated_at
-    
-    property :reference
-    
+    element :id, Integer
+    element :reference, String
+
+    element :first_name, String
+    element :last_name, String
+
+    element :email, String
+    element :organization, String
+
+    # element :phone, String
+    # element :address, String
+    # element :address_2, String
+    # element :city, String
+    # element :state, String
+    # element :zip, String
+    # element :country, String
+
+    element :created_at, DateTime
+    element :updated_at, DateTime
+
+    # element :reference
+
     class << self
       def all(options={})
         customers = get("/customers.json", :query => options)
@@ -48,7 +50,7 @@ module Chargify
       # * email (Required)
       # * organization (Optional) Company/Organization name
       # * reference (Optional, but encouraged) The unique identifier used within your own application for this customer
-      # 
+      #
       def create(info={})
         response = post("/customers.json", :body => {:customer => info})
         return Customer.new(response['customer']) if response['customer']
@@ -61,7 +63,7 @@ module Chargify
       # * email (Required)
       # * organization (Optional) Company/Organization name
       # * reference (Optional, but encouraged) The unique identifier used within your own application for this customer
-      # 
+      #
       def update(info={})
         info.stringify_keys!
         chargify_id = info.delete('id')
@@ -71,7 +73,7 @@ module Chargify
       end
 
     end
-    
+
     def update
       response = put("/customers/#{id}.json", :body => {:customer => self.to_json})
       hash = JSON.parse(response['customer']).symbolize_keys
@@ -82,7 +84,7 @@ module Chargify
     def subscriptions
       @subscriptions ||= Proxy.new(self, Subscription)
     end
-    
+
   end
-  
+
 end
