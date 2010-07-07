@@ -52,21 +52,6 @@ module Chargify
         response
       end
 
-      #
-      # * first_name (Required)
-      # * last_name (Required)
-      # * email (Required)
-      # * organization (Optional) Company/Organization name
-      # * reference (Optional, but encouraged) The unique identifier used within your own application for this customer
-      #
-      def update(info={})
-        info.stringify_keys!
-        chargify_id = info.delete('id')
-        response = put("/customers/#{chargify_id}.json", :body => {:customer => info})
-        return Customer.new(response['customer']) unless Customer.new(response['customer']).to_a.empty?
-        response
-      end
-
     end
 
     def update
@@ -74,10 +59,6 @@ module Chargify
       hash = JSON.parse(response['customer']).symbolize_keys
       return self.update(hash)
       response
-    end
-
-    def subscriptions
-      @subscriptions ||= Proxy.new(self, Subscription)
     end
 
   end
