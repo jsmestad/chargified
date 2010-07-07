@@ -10,7 +10,7 @@ Contributions are welcome!
 
 == Features
 
-* Compatible with Pivotal Tracker API version 3
+* Fully tested against an existing Chargify application
 * ActiveRecord-style Wrapper API
 
 == Overview
