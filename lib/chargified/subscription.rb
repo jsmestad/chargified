@@ -5,8 +5,12 @@ module Chargified
 
     class << self
       def all(customer)
-        subscriptions = get("/customers/#{id}/subscriptions")
-        subscriptions.map{ |s| Subscription.new(s['subscription']) }
+        subscriptions = parse(Client.connection["/customers/#{id}/subscriptions"].get)
+      end
+
+      def find(id)
+        return all if id == :all
+
       end
     end
 

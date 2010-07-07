@@ -1,4 +1,4 @@
-module Chargify
+module Chargified
   class Customer
     include HappyMapper
 
@@ -31,6 +31,8 @@ module Chargify
       end
 
       def find(id)
+        return all if id == :all
+
         customer = parse(Client.connection["/customers/#{id}"].get)
       end
 

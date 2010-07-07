@@ -18,6 +18,7 @@ module Chargified
   autoload :Config,         'chargified/config'
   autoload :Client,         'chargified/client'
   autoload :Customer,       'chargified/customer'
+  autoload :CreditCard,     'chargified/credit_card'
   autoload :Subscription,   'chargified/subscription'
   autoload :Product,        'chargified/product'
   autoload :ProductFamily,  'chargified/product_family'
