@@ -25,23 +25,18 @@ module Chargify
     # element :reference
 
     class << self
+
       def all(options={})
-        customers = get("/customers.json", :query => options)
-        customers.map{ |c| Customer.new(c['customer']) }
+        customers = parse(Client.connection["/customers"].get)
       end
 
-      def find_by_id(chargify_id)
-        request = get("/customers/#{chargify_id}.json")
-        success = request.code == 200
-        response = request['customer'] if success
-        Customer.new(response || {})
+      def find(id)
+        customer = parse(Client.connection["/customers/#{id}"].get)
       end
 
-      def find_by_reference(reference_id)
-        request = get("/customers/lookup.json?reference=#{reference_id}")
-        success = request.code == 200
-        response = request['customer'] if success
-        Customer.new(response || {})
+      def lookup(options={})
+        params = Chargified.encode_options(options)
+        customers = parse(Client.connection["/customers/lookup#{params}"].get)
       end
 
       #

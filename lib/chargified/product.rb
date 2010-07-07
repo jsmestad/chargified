@@ -1,4 +1,4 @@
-module Chargify
+module Chargified
   class Product
     include HappyMapper
 

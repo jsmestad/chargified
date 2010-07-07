@@ -18,4 +18,14 @@ module Chargified
   # autoload :Proxy,        'chargified/proxy'
   # autoload :Subscription, 'chargified/subscription'
 
+  def self.encode_options(options)
+    return nil if !options.is_a?(Hash) || options.empty?
+
+    options_string = []
+    options_string << "reference=#{options.delete(:reference)}" if options[:reference]
+
+    return "?#{options_string.join('&')}"
+  end
+
+
 end

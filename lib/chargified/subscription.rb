@@ -1,11 +1,11 @@
 # http://support.chargify.com/faqs/api/api-subscriptions#api-usage-xml-subscriptions-read
-module Chargify
+module Chargified
   class Subscription
     include HappyMapper
 
     class << self
       def all(customer)
-        subscriptions = get("/customers/#{id}/subscriptions.json")
+        subscriptions = get("/customers/#{id}/subscriptions")
         subscriptions.map{ |s| Subscription.new(s['subscription']) }
       end
     end
@@ -26,7 +26,6 @@ module Chargify
 
     element :created_at, DateTime
     element :updated_at, DateTime
-
 
     has_one :customer, Customer
     has_one :credit_card, CreditCard
