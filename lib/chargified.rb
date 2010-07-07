@@ -3,22 +3,25 @@ require 'rest_client'
 require 'happymapper'
 require 'nokogiri'
 
-require File.join(File.dirname(__FILE__), 'chargified', 'extensions')
-require File.join(File.dirname(__FILE__), 'chargified', 'proxy')
-require File.join(File.dirname(__FILE__), 'chargified', 'config')
-require File.join(File.dirname(__FILE__), 'chargified', 'client')
-require File.join(File.dirname(__FILE__), 'chargified', 'customer')
-require FIle.join(File.dirname(__FILE__), 'chargified', 'subscription')
+# require File.join(File.dirname(__FILE__), 'chargified', 'extensions')
+# require File.join(File.dirname(__FILE__), 'chargified', 'proxy')
+# require File.join(File.dirname(__FILE__), 'chargified', 'config')
+# require File.join(File.dirname(__FILE__), 'chargified', 'client')
+# require File.join(File.dirname(__FILE__), 'chargified', 'customer')
+# require FIle.join(File.dirname(__FILE__), 'chargified', 'subscription')
 
 module Chargified
 
   class UnexpectedResponseError < RuntimeError; end
 
-  # autoload :Client,       'chargified/client'
-  # autoload :Parser,       'chargified/parser'
-  # autoload :Customer,     'chargified/customer'
-  # autoload :Proxy,        'chargified/proxy'
-  # autoload :Subscription, 'chargified/subscription'
+  autoload :Proxy,          'chargified/proxy'
+  autoload :Config,         'chargified/config'
+  autoload :Client,         'chargified/client'
+  autoload :Customer,       'chargified/customer'
+  autoload :Subscription,   'chargified/subscription'
+  autoload :Product,        'chargified/product'
+  autoload :ProductFamily,  'chargified/product_family'
+  autoload :Charge,         'chargified/charge'
 
   def self.encode_options(options)
     return nil if !options.is_a?(Hash) || options.empty?
