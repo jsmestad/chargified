@@ -10,9 +10,6 @@ require 'chargified'
 require 'spec'
 require 'spec/autorun'
 
-PROJECT_ID = ENV['PROJECT_ID'] || "59022"
-TOKEN = 'a40c739c5c2499461fcae008dda48b8c'
-
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
@@ -24,6 +21,13 @@ Spec::Runner.configure do |config|
 
   config.before :suite do
     StaleFish.update_stale
+
+    # Using real chargify site
+    Chargified::Config.setup do |config|
+      config[:api_key] = '_R5GnufAvk6yCjYRpkod'
+      config[:subdomain] = 'chargified'
+    end
+
   end
 
 end
