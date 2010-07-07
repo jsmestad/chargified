@@ -9,7 +9,7 @@ require File.join(File.dirname(__FILE__), 'chargified', 'config')
 require File.join(File.dirname(__FILE__), 'chargified', 'client')
 
 module Chargified
-  
+
   class UnexpectedResponseError < RuntimeError; end
 
   # autoload :Client,       'chargified/client'

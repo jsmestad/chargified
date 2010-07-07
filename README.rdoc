@@ -49,4 +49,9 @@ Contributions are welcome!
 == Contributers
 
 * Justin Smestad (http://github.com/jsmestad)
+
+== Thanks
+
 * Wynn Netherland (http://wynnnetherland.com)
+* Richard Livsey (http://github.com/rlivsey)
+
