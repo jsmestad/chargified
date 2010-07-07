@@ -27,7 +27,8 @@ module Chargified
     class << self
 
       def all(options={})
-        customers = parse(Client.connection["/customers"].get)
+        response = Client.connection["/customers"].get
+        customers = parse(response)
       end
 
       def find(id)

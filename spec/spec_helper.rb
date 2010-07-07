@@ -17,17 +17,18 @@ Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].e
 StaleFish.setup(File.join(File.dirname(__FILE__), 'fixtures', 'stale_fish.yml'))
 
 Spec::Runner.configure do |config|
-  # config.include(Rack::Test::Methods)
 
   config.before :suite do
+    client_setup
     StaleFish.update_stale
-
-    # Using real chargify site
-    Chargified::Config.setup do |config|
-      config[:api_key] = '_R5GnufAvk6yCjYRpkod'
-      config[:subdomain] = 'chargified'
-    end
-
   end
 
+end
+
+def client_setup
+  # Using real chargify site
+  Chargified::Config.setup do |config|
+    config[:api_key] = '_R5GnufAvk6yCjYRpkod'
+    config[:subdomain] = 'chargified'
+  end
 end
