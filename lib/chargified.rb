@@ -7,6 +7,8 @@ require File.join(File.dirname(__FILE__), 'chargified', 'extensions')
 require File.join(File.dirname(__FILE__), 'chargified', 'proxy')
 require File.join(File.dirname(__FILE__), 'chargified', 'config')
 require File.join(File.dirname(__FILE__), 'chargified', 'client')
+require File.join(File.dirname(__FILE__), 'chargified', 'customer')
+require FIle.join(File.dirname(__FILE__), 'chargified', 'subscription')
 
 module Chargified
 
